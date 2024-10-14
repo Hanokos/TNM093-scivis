@@ -1,0 +1,88 @@
+body {
+  background-color: rgb(76, 36, 14); /* Brown background */
+  color: white; /* Ensuring text is readable against brown */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  padding: 20px; /* Some padding around the body */
+}
+
+#canvasContainer {
+  display: flex; /* Flex container for main canvas and histogram */
+  margin-bottom: 20px; /* Space below canvas */
+}
+
+#glCanvas {
+  flex: 1; /* Allow the object canvas to take available space */
+  max-width: 60%; /* Maximum width to prevent overflowing */
+  max-height: 60vh; /* Maximum height to ensure it doesn't get too tall */
+  border: 1px solid white; /* Border for visibility */
+}
+
+#tfDiv {
+  margin-left: 20px; /* Space between the two canvases */
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+  border: 1px solid white; /* Border for visibility */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px; /* Padding inside the box */
+}
+
+#settingsDiv {
+  display: flex; /* Make settings a flex container */
+  justify-content: space-between; /* Space between Rendering Parameters, Camera, and Debugging */
+  width: 100%; /* Full width */
+  max-width: 800px; /* Set maximum width for the settings div */
+  margin: 20px 0; /* Space above and below */
+}
+
+#renderingDiv,
+#cameraDiv,
+#debuggingDiv {
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white background */
+  border: 1px solid white; /* Border for visibility */
+  border-radius: 5px; /* Rounded corners */
+  padding: 5px; /* Reduced padding for less space */
+  min-width: 200px; /* Minimum width to ensure usability */
+  margin-right: 10px; /* Reduced margin between boxes */
+}
+
+h3 {
+  margin: 0 0 5px 0; /* Margin for the headers */
+}
+
+@media (max-width: 800px) {
+  #canvasContainer {
+    flex-direction: column; /* Stack canvases vertically on smaller screens */
+  }
+
+  #tfDiv {
+    margin-left: 0; /* Reset margin when stacking */
+    margin-top: 20px; /* Add space when stacked */
+  }
+
+  #settingsDiv {
+    flex-direction: column; /* Stack settings vertically on smaller screens */
+    max-width: 100%; /* Full width on small screens */
+  }
+
+  #renderingDiv, 
+  #cameraDiv,
+  #debuggingDiv {
+    width: 100%; /* Full width on small screens */
+    margin-right: 0; /* Reset margin on small screens */
+  }
+}
+
+@media (max-width: 1200px) {
+  #glCanvas {
+    max-width: 50%; /* Max width of canvas for medium-sized screens */
+    max-height: 50vh; /* Max height for medium-sized screens */
+  }
+}
+
+@media (max-width: 800px) {
+  #glCanvas {
+    max-width: 100%; /* Full width for small screens */
+    max-height: 40vh; /* Adjust height for small screens */
+  }
+}
