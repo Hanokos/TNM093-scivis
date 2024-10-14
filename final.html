@@ -1,0 +1,82 @@
+<html>
+
+<!--
+  Adding Brandon Jones and Colin MacKenzie IV's gl-matrix library that provides easy to
+  use vector and matrix maths operations.  Source: https://github.com/toji/gl-matrix
+-->
+
+<!-- Links -->
+<script type="text/javascript" src="gl-matrix.js"></script> <!-- Given file  -->
+<script type="text/javascript" src="mainfunc.js"></script> <!-- Link to JavaScript file with @TODO and transfer func -->
+<script type="text/javascript" src="func.js" defer></script> <!-- Link to JavaScript file with our extra functions -->
+<link rel="stylesheet" href="style.css"> <!-- Link to CSS  -->
+
+
+<body onload="main();"> <!-- Starta  'main' function när body är loaded -->
+  <div id="canvasContainer">
+    <canvas id="glCanvas" width="640" height="480"></canvas> <!-- Main rendering canvas for the object -->
+    
+    <div id="tfDiv"> <!-- Div for transfer function settings so they are in teh same box -->
+      <canvas id="transferCanvas" width="640" height="480"></canvas> <!-- Histogram canvas for the transfer function -->
+
+      <p>[Transfer Function parameters]</p>
+      <div id="divRow">
+        <div id="colorDiv">
+
+          <!-- Label and input for (RÖD) -->
+          <label for="color1">Change first color:</label>
+          <input type="color" name="color1" id="color1" value="#FF0000" onchange="ChangeColor(this)"> <!-- [ChangeColor] func to change that nodes color -->
+
+          <!-- Label and input for (GRÖN) -->
+          <label for="color2">Change second color:</label>
+          <input type="color" name="color2" id="color2" value="#00FF00" onchange="ChangeColor(this)">
+
+          <!-- Label and input for (BLÅ) -->
+          <label for="color3">Change third color:</label>
+          <input type="color" name="color3" id="color3" value="#0000AA" onchange="ChangeColor(this)"> 
+          
+        </div> 
+      </div> 
+    </div>
+  </div> <!-- End av canvasContainer -->
+
+  <div id="settingsDiv"> 
+    <div id="renderingDiv"> 
+      <h3>[Rendering Parameters]</h3> 
+      <div>
+        Step size: <input type="range" min="10" max="10000" value="1000" class="slider" id="stepSize" oninput="triggerRendering();">
+      </div>
+      <div>
+        <div>Compositing method:</div> 
+        <div><input type="radio" name="compositing" value="ftb" onchange="triggerRendering();" checked>Front-to-back</div> 
+        <div><input type="radio" name="compositing" value="fhp" onchange="triggerRendering();">First hit-point</div>
+        <div><input type="radio" name="compositing" value="mip" onchange="triggerRendering();">Maximum-intensity projection</div>
+      </div>
+    </div> <!-- End av renderingDiv -->
+
+    <div id="cameraDiv"> 
+      <h3>[Camera]</h3> 
+      <div> Zoom (r): <input type="range" min="0" max="100" value="50" class="slider" id="camera-r" oninput="triggerRendering();"></div>
+      <div> Rotation X (phi): <input type="range" min="0" max="360" value="35" class="slider" id="camera-phi" oninput="triggerRendering();"></div>
+      <div> Rotation Y (theta): <input type="range" min="1" max="180" value="65" class="slider" id="camera-theta" oninput="triggerRendering();"></div>
+    </div> 
+
+    <div id="debuggingDiv"> 
+      <h3>[Debugging Output]</h3> 
+      <div>
+        <div>Rendering output:</div> 
+        <div><input type="radio" name="debug-output" value="volume" onchange="triggerRendering();" checked>Volume Rendering</div> 
+        <div><input type="radio" name="debug-output" value="entry" onchange="triggerRendering();">Entry Points</div> 
+        <div><input type="radio" name="debug-output" value="exit" onchange="triggerRendering();">Exit Points</div> 
+        <div><input type="radio" name="debug-output" value="direction" onchange="triggerRendering();">Ray direction</div> 
+        <div><input type="radio" name="debug-output" value="transfer" onchange="triggerRendering();">Transfer Function</div> 
+        <div><input type="radio" name="debug-output" value="slice" onchange="triggerRendering();">Volume Slice</div> 
+        <div><input type="radio" name="debug-output" value="slice-transfer" onchange="triggerRendering();">Volume Slice with transfer function</div> 
+      </div>
+    </div>
+  </div> <!-- End of settingsDiv -->
+
+  <p id="error"></p> <!-- Paragraph for displaying error messages -->
+</body>
+
+</html>
