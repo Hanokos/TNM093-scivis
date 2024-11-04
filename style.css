@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(76, 36, 14); /* Brown background */
+  background-color: rgb(128, 186, 241); /* Blue ish background */
   color: white; /* Ensuring text is readable against brown */
   display: flex;
   flex-direction: column;
