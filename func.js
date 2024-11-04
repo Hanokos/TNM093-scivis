@@ -27,8 +27,8 @@ window.addEventListener('mousemove', function(e) {
     mouse.x = mousePos.x;
     mouse.y = mousePos.y;
     mouse.down = e.buttons == 1; // Check if the left mouse button is pressed
-    console.log(mouse);
-    console.log(e.buttons == 1); // DEBUGGING
+    //console.log(mouse);
+    //console.log(e.buttons == 1); // DEBUGGING
     if (e.buttons == 0) { // If no button is pressed, 
         mouse.nodeSelected = -1; // then no node are selected
     }
@@ -140,11 +140,6 @@ function hexToRgb(hex) { // Function to make hex to rgb 255. hexadecimal = base 
     return [r, g, b];
 }
 
-  /*
-function rgbToHex(rgb) {
-    return "#" + (1 << 24 | rgb[0] << 16 | rgb[1] << 8 | rgb[2]).toString(16).slice(1);
-}*/
-
 function ChangeColor(e) {
     let color = e.value; // Get the selected color from the event object
     let index = (e.name[e.name.length - 1] - 1) * 4; // Calculate the index of the nodes to update
@@ -173,7 +168,7 @@ function createPairNodes(start) {
     let nodeColor = colorArray[0]; // Red (from the [var colorArray])
     let redtopleft = new Node(startX - 40, 275, interactDist, nodeColor, true, 0); // Node position in the histogram
     let redtopright = new Node(startX + 50, 275, interactDist, nodeColor, true, 1);
-    let redstart = new Node(startX - 40, 425, interactDist, nodeBlack, false, 2); // False indicates not moveable in y axis. moveHorizontally = false
+    let redstart = new Node(startX - 40, 425, interactDist, nodeBlack, false, 2); // False indicates not moveable in Y axis. moveHorizontally = false
     let redend = new Node(startX + 50, 425, interactDist, nodeBlack, false, 3);
     
     circleArrayNode.push(redtopleft); // Add the top left Röd node to the array
@@ -261,22 +256,19 @@ var histData = Array.from(Array(256)).fill(0);
 function loadRawData(loadRawData) {
     // console.log(loadRawData);
   
-    for (let i = 0; i < loadRawData.length; i++) {
-      histData[loadRawData[i]]++;
+    for (let i = 0; i < loadRawData.length; i++) {//iterates over the loadRawData array
+      histData[loadRawData[i]]++; // If a value from loadRawData is found, the corresponding index in histData is incremented by 1
     }
     // log all data
     for (let i = 0; i < histData.length; i++) {
-      histData[i] = Math.log(histData[i] + 1);
+      histData[i] = Math.log(histData[i] + 1); //  counting the voxel, the histogram values are transformed using a logarithmic function (Math.log). The +1 is added to avoid taking the log of zero
     }
   
-    let histMax = Math.max(...histData);
-    // console.log(histMax);
-    // console.log(histData);
-    for (let i = 0; i < histData.length; i++) {
-      histData[i] = histData[i] / histMax;
+    let histMax = Math.max(...histData); // finds the maximum value in the histData array after the logarithmic scaling. 
+
+    for (let i = 0; i < histData.length; i++) { 
+      histData[i] = histData[i] / histMax; // normalizes the histogram data by dividing each value by the maximum value (histMax). This ensures that all the values in histData are between 0 and 1.
     }
-    // console.log(Math.min(...histData));
-    // console.log(histData);
 }
   
 // default text color och line color for drawing
@@ -294,12 +286,11 @@ function drawHist() {
     for (let i = 0; i < histData.length; i++) {
       scaledHistData[i] = (1 - histData[i]) * yDiff + yDiff + 35;
     }
-    console.log(Math.min(...scaledHistData)); // CONSOLE för kolla
+    //console.log(Math.min(...scaledHistData)); DEBUGG
   
     let xStep = (600 - 50) / 256; // Width of the histogram
-    console.log(scaledHistData);
-    /*The histogram has a total width of 550 pixels, 
-    with each of the 256 bins approximately 2.15 pixels wide. */
+    //console.log(scaledHistData);
+    /*The histogram has a total width of 550 pixels, */
 
   
     c.fillStyle = textColor;
@@ -311,16 +302,16 @@ function drawHist() {
 }
   
 function animate() {
-    requestAnimationFrame(animate);
-    c.clearRect(0, 0, innerWidth, innerHeight);
+    requestAnimationFrame(animate); // Browser call the animate function so it update histogram in real time
+    c.clearRect(0, 0, innerWidth, innerHeight); // clearn whole canvas and then update new canvas. otherwise the fram would stilll be ther and give artifact
   
     // HISTOGRAM X axis and Y axis line
     c.fillStyle = textColor;
     c.beginPath(); // Create the histogram 
     c.moveTo(50, 35);
-    c.lineTo(50, 425);
+    c.lineTo(50, 425); // Draw a vertical line to (50, 425)
     c.lineTo(600, 425);
-    c.lineWidth = 5;
+    c.lineWidth = 5;   // Set line thickness to 5
     c.strokeStyle = textColor;
     c.stroke();
   
@@ -331,18 +322,18 @@ function animate() {
   
     drawHist(); // Make the histogram
   
-    for (let i = 0; i < circleArrayNode.length; i += 4) {
+    for (let i = 0; i < circleArrayNode.length; i += 4) { // Loop so it connects four nodes (forming a rectangle or similar shape) using lines.
         c.beginPath();
-        c.moveTo(circleArrayNode[i + 2].x, circleArrayNode[i + 2].y);
+        c.moveTo(circleArrayNode[i + 2].x, circleArrayNode[i + 2].y); // start att bottom left node then goes all around to the bottom right node
         c.lineTo(circleArrayNode[i].x, circleArrayNode[i].y);
         c.lineTo(circleArrayNode[i + 1].x, circleArrayNode[i + 1].y);
         c.lineTo(circleArrayNode[i + 3].x, circleArrayNode[i + 3].y);
         c.lineWidth = 3;
-        c.stroke();
+        c.stroke(); // draw them on the canvas
     }
   
     c.lineWidth = 1;
-    for (var i = 0; i < circleArrayNode.length; i++) {
+    for (var i = 0; i < circleArrayNode.length; i++) { // This loop goes through all the nodes and calls update() for each one, jsut to make sure that all nodes are redrawn in their current position.
         circleArrayNode[i].update();
     }
     DragNode();
