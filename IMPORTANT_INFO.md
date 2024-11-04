@@ -1,10 +1,14 @@
-YOU NEED the files I have here and the following:
-pig.dat,
-pig.raw,
-.gitignore and  
+To set up the project, you need the files I have here and the following:
+
+pig.dat
+pig.raw
+.gitignore
 start_httpserver_tp5023
 
-These files you get from downloading from LISAM given file from lab files.
-The only files I have made any own code in are within mainfunc, func, and final
+Download these additional files from the lab files section on LISAM.
 
-the VERY IMPORTANT is to press crl+f within visual studio code in the mainfunc.js file and search for the word OBS!!!. it's very important to understand why we can go to the node version instead of widget-based system
+The only files that contain my own code are within the folders: mainfunc, func, and final.
+
+IMPORTANT: Open mainfunc.js in Visual Studio Code, press Ctrl + F, and search for the word “OBS!!!”. It’s very important to understand these notes to see why we can switch to a Node-based system instead of a widget-based system.
+
+/By: H.F
