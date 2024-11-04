@@ -951,11 +951,11 @@ async function main() {
       // [0, 256) manually
       convertedData[i] = typedData[i] / 4096.0 * 256.0
     }
-
+    /* Converting Data: The 16-bit voxel intensities are converted to 8-bit values (range [0, 256)). */
 
 
     // OBS!!! OUR OWN CODE
-    loadRawData(convertedData);
+    loadRawData(convertedData); // build the histogram of the voxel intensity values,
     // END OF OUR CODE
 
 
